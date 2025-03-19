@@ -74,7 +74,7 @@
   value: "plain"
 - name: SMTP_OPENSSL_VERIFY_MODE
   value: "none"
-- name: SMTP_ENABLE_STARTTLS:
+- name: SMTP_ENABLE_STARTTLS
   value: "auto"
 - name: SMTP_FROM_ADDRESS
   value: "Mastodon <notifications@localhost>"
