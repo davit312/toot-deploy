@@ -1,5 +1,9 @@
-image:
-  tag: v4.3.6
+nameOverride: ""
+
+web:
+  image:
+    tag: v4.3.6
+    repository: tootsuite/mastodon
 
 redis:
     autoscaling:
@@ -12,7 +16,6 @@ redis:
     auth:
       existingSecret: "db-secrets"
       existingSecretPasswordKey: "REDIS_PASSWORD"
-
 postgresql:
     auth:
       database: "mastodon_production"
@@ -22,3 +25,9 @@ postgresql:
         adminPasswordKey: POSTGRES_PASSWORD
         userPasswordKey: POSTGRES_PASSWORD
         replicationPasswordKey: POSTGRES_PASSWORD
+    primary:
+      persistence:
+        size: 3Gi
+    readReplicas:
+      persistence:
+        size: 3Gi
