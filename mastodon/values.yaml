@@ -1,5 +1,5 @@
 nameOverride: ""
-localhDomain: "localhost"
+localDomain: "localhost"
 existingEncriptionSecretName : "app-encription"
 
 web:
