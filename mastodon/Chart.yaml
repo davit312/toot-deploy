@@ -3,10 +3,10 @@ name: mastodon
 type: application
 version: 0.1.0
 appVersion: "4.3.6"
-dependencies: 
-- name: redis
-  repository: https://charts.bitnami.com/bitnami
-  version: 20.11.x
-- name: postgresql
-  repository: https://charts.bitnami.com/bitnami
-  version: 16.5.x
+# dependencies: 
+# - name: redis
+#   repository: https://charts.bitnami.com/bitnami
+#   version: 20.11.x
+# - name: postgresql
+#   repository: https://charts.bitnami.com/bitnami
+#   version: 16.5.x
