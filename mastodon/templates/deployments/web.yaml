@@ -16,5 +16,10 @@ spec:
         app: {{ include "mastodon.name" . }}-web
     spec:
       containers:
+
+
+
       - image: "{{ .Values.web.image.repository }}:{{ .Values.web.image.tag }}"
         name: {{ include "mastodon.name" . }}-web
+        env:
+        {{ template "mastodon.env.production" . }}

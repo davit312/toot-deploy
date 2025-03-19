@@ -1,4 +1,6 @@
 nameOverride: ""
+localhDomain: "localhost"
+existingEncriptionSecretName : "app-encription"
 
 web:
   image:
