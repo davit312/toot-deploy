@@ -16,11 +16,14 @@ spec:
         app: {{ include "mastodon.name" . }}-web
     spec:
       initContainers:
-      - name: wait-for-postgres
+      - name: wait-for-db
         image: busybox:latest
-        command: ['sh', '-c', 'until nc -vz ${DB_HOST} ${DB_PORT}; do echo "Waiting for postgresql to be ready..."; sleep 3; done;']
+        command: ['sh', '-c', 
+          'until nc -vz ${DB_HOST} ${DB_PORT}; do echo "Waiting for postgresql to be ready..."; sleep 3; done;
+          until nc -vz ${REDIS_HOST} ${REDIS_PORT}; do echo "Waiting for redis to be ready..."; sleep 3; done;']
         env:
 {{ include "mastodon.postgresql.path" . | indent 8 }}
+{{ include "mastodon.redis.path" . | indent 8 }}
       containers:
       - image: "{{ .Values.web.image.repository }}:{{ .Values.web.image.tag }}"
         name: {{ include "mastodon.name" . }}-web

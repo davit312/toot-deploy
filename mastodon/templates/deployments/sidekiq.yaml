@@ -2,18 +2,18 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: {{ include "mastodon.name" . }}-streaming
-  name: {{ include "mastodon.name" . }}-streaming
+    app: {{ include "mastodon.name" . }}-sidekiq
+  name: {{ include "mastodon.name" . }}-sidekiq
   namespace: {{ .Release.Namespace }}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: {{ include "mastodon.name" . }}-streaming
+      app: {{ include "mastodon.name" . }}-sidekiq
   template:
     metadata:
       labels:
-        app: {{ include "mastodon.name" . }}-streaming
+        app: {{ include "mastodon.name" . }}-sidekiq
     spec:
       initContainers:
       - name: wait-for-db
@@ -25,13 +25,12 @@ spec:
 {{ include "mastodon.postgresql.path" . | indent 8 }}
 {{ include "mastodon.redis.path" . | indent 8 }}
       containers:
-      - image: "{{ .Values.streaming.image.repository }}:{{ .Values.streaming.image.tag }}"
-        name: {{ include "mastodon.name" . }}-streaming
+      - image: "{{ .Values.web.image.repository }}:{{ .Values.web.image.tag }}"
+        name: {{ include "mastodon.name" . }}-sidekiq
         command: 
         - bash 
         - -c
-        - "sleep 30; node ./streaming/"
+        - "bundle exec sidekiq"
         env:
 {{ include "mastodon.environment" . | indent 8 }}
-        ports:
-        - containerPort: 4000
+

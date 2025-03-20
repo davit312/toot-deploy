@@ -12,6 +12,12 @@ streaming:
     tag: v4.3.6
     repository: ghcr.io/mastodon/mastodon-streaming
 
+sidekiq:
+  image:
+    tag: v4.3.6
+    repository: tootsuite/mastodon
+
+
 redis:
     autoscaling:
       maxReplicas: 1

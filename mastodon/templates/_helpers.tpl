@@ -92,6 +92,13 @@
   value: "5432"
 {{- end }}
 
+{{- define "mastodon.redis.path" -}}
+- name: REDIS_HOST
+  value: {{ include "mastodon.redis.fullname" . }}
+- name: REDIS_PORT
+  value: "6379"
+{{- end }}
+
 {{- define "mastodon.redis.fullname" -}}
 {{- printf "%s-%s-headless" .Release.Name "redis" | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
