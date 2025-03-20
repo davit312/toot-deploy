@@ -2,18 +2,18 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: {{ include "mastodon.name" . }}-web
-  name: {{ include "mastodon.name" . }}-web
+    app: {{ include "mastodon.name" . }}-streaming
+  name: {{ include "mastodon.name" . }}-streaming
   namespace: {{ .Release.Namespace }}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: {{ include "mastodon.name" . }}-web
+      app: {{ include "mastodon.name" . }}-streaming
   template:
     metadata:
       labels:
-        app: {{ include "mastodon.name" . }}-web
+        app: {{ include "mastodon.name" . }}-streaming
     spec:
       initContainers:
       - name: wait-for-postgres
@@ -22,13 +22,13 @@ spec:
         env:
 {{ include "mastodon.postgresql.path" . | indent 8 }}
       containers:
-      - image: "{{ .Values.web.image.repository }}:{{ .Values.web.image.tag }}"
-        name: {{ include "mastodon.name" . }}-web
+      - image: "{{ .Values.streaming.image.repository }}:{{ .Values.streaming.image.tag }}"
+        name: {{ include "mastodon.name" . }}-streaming
         command: 
         - bash 
         - -c
-        - "rm -f /mastodon/tmp/pids/server.pid; bundle exec rails s -p 3000"
+        - "sleep 30; node ./streaming/"
         env:
 {{ include "mastodon.environment" . | indent 8 }}
         ports:
-        - containerPort: 3000
+        - containerPort: 4000

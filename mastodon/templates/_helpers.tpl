@@ -61,7 +61,10 @@
 - name: REDIS_PORT
   value: "6379"
 - name: REDIS_PASSWORD
-  value: ""
+  valueFrom:
+    secretKeyRef:
+      name: {{ .Values.redis.auth.existingSecret }}
+      key: {{ .Values.redis.auth.existingSecretPasswordKey }}
 - name: SMTP_SERVER
   value: "smtp.mailgun.org"
 - name: SMTP_PORT
@@ -82,8 +85,15 @@
   value: ""
 {{- end }}
 
+{{- define "mastodon.postgresql.path" -}}
+- name: DB_HOST
+  value: {{ include "mastodon.postgresql.fullname" . }}
+- name: DB_PORT
+  value: "5432"
+{{- end }}
+
 {{- define "mastodon.redis.fullname" -}}
-{{- printf "%s-%s" .Release.Name "redis" | trunc 63 | trimSuffix "-" -}}
+{{- printf "%s-%s-headless" .Release.Name "redis" | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
 {{- define "mastodon.postgresql.fullname" -}}

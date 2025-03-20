@@ -1,0 +1,25 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "mastodon.name" . }}-init
+  namespace: {{ .Release.Namespace }}
+spec:
+  template:
+    spec:
+      restartPolicy: Never
+      initContainers:
+      - name: wait-for-postgres
+        image: busybox:latest
+        command: ['sh', '-c', 'until nc -vz ${DB_HOST} ${DB_PORT}; do echo "Waiting for postgresql to be ready..."; sleep 3; done;']
+        env:
+{{ include "mastodon.postgresql.path" . | indent 8 }}
+      containers:
+      - name: init-db
+        image: "{{ .Values.web.image.repository }}:{{ .Values.web.image.tag }}"
+        command: 
+        - bash
+        -  -c
+        -  DISABLE_DATABASE_ENVIRONMENT_CHECK=1 RAILS_ENV=production rails db:setup; bundle exec rake db:migrate
+        env:
+{{ include "mastodon.environment" . | indent 8 }}
+

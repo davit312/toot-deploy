@@ -7,6 +7,11 @@ web:
     tag: v4.3.6
     repository: tootsuite/mastodon
 
+streaming:
+  image:
+    tag: v4.3.6
+    repository: ghcr.io/mastodon/mastodon-streaming
+
 redis:
     autoscaling:
       maxReplicas: 1
