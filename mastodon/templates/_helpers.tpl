@@ -1,6 +1,6 @@
 {{/* Application name */}}
 {{- define "mastodon.name" -}}
-    {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
+    {{- default .Release.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{- define "mastodon.environment" -}}
@@ -46,7 +46,7 @@
 - name: DB_HOST
   value: {{ include "mastodon.postgresql.fullname" . }}
 - name: DB_PORT
-  value: 5432
+  value: "5432"
 - name: DB_NAME
   value: {{ .Values.postgresql.auth.database }}
 - name: DB_USER

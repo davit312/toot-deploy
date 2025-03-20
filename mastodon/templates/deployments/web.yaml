@@ -15,8 +15,26 @@ spec:
       labels:
         app: {{ include "mastodon.name" . }}-web
     spec:
+      initContainers:
+      - name: wait-for-postgres
+        image: busybox:latest
+        command: ['sh', '-c', 'until nc -vz ${DB_HOST} ${DB_PORT}; do echo "Waiting for postgresql to be ready..."; sleep 3; done;']
+        env:
+{{ include "mastodon.environment" . | indent 8 }}
+      - name: init-db-env
+        image: "{{ .Values.web.image.repository }}:{{ .Values.web.image.tag }}"
+        command: 
+        - bash
+        -  -c
+        -  DISABLE_DATABASE_ENVIRONMENT_CHECK=1 RAILS_ENV=production rails db:setup; bundle exec rake db:migrate
+        env:
+{{ include "mastodon.environment" . | indent 8 }}
       containers:
       - image: "{{ .Values.web.image.repository }}:{{ .Values.web.image.tag }}"
         name: {{ include "mastodon.name" . }}-web
+        command: 
+        - bash 
+        - -c
+        - "rm -f /mastodon/tmp/pids/server.pid; bundle exec rails s -p 3000"
         env:
 {{ include "mastodon.environment" . | indent 8 }}
