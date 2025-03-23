@@ -1,0 +1,12 @@
+{{- $svcName := printf "%s-web" (include "mastodon.name" .) -}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ $svcName }}
+spec:
+  selector:
+    app: {{ include "mastodon.name" . }}-web
+{{ include "mastodon.selectorLabels" . | indent 4 }}
+  ports:
+    - protocol: TCP
+      port: 3000

@@ -14,6 +14,7 @@ spec:
     metadata:
       labels:
         app: {{ include "mastodon.name" . }}-web
+{{ include "mastodon.selectorLabels" . | indent 8 }}
     spec:
       initContainers:
       - name: wait-for-db

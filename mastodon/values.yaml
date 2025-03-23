@@ -1,5 +1,5 @@
 nameOverride: ""
-localDomain: "localhost"
+localDomain: "mastodon.local"
 existingEncriptionSecretName : "app-encription"
 
 web:

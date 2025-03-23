@@ -3,6 +3,12 @@
     {{- default .Release.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
+{{- define "mastodon.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "mastodon.name" . }}
+app.kubernetes.io/instance: {{ .Release.Name }}
+helm/chart-name: {{ .Chart.Name }}
+{{- end }}
+
 {{- define "mastodon.environment" -}}
 - name: LOCAL_DOMAIN
   value: {{ .Values.localDomain }}
