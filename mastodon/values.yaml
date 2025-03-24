@@ -1,6 +1,7 @@
 nameOverride: ""
 localDomain: "mastodon.local"
 existingEncriptionSecretName : "app-encription"
+tlsSecretName: "mastodon-tls-secret"
 
 web:
   image:
