@@ -17,6 +17,5 @@ spec:
         path: /
         pathType: Prefix
   tls:
-  - host: ""
-    secretName: mastodon-tls-secret
+  - secretName: mastodon-tls-secret
 
