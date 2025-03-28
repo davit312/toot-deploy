@@ -1,6 +1,7 @@
+{{- if .Release.IsInstall -}}
 apiVersion: batch/v1
 kind: Job
-metadata:
+metadata.Release.IsInstall :
   name: {{ include "mastodon.name" . }}-init
   namespace: {{ .Release.Namespace }}
 spec:
@@ -28,4 +29,4 @@ spec:
           echo Email: "{{ .Values.initialAdmin.email | default (printf "admin@%s" .Values.localDomain) }}"
         env:
 {{ include "mastodon.environment" . | indent 8 }}
-
+{{ end }}
