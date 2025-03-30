@@ -1,7 +1,7 @@
 {{- if .Release.IsInstall -}}
 apiVersion: batch/v1
 kind: Job
-metadata.Release.IsInstall :
+metadata:
   name: {{ include "mastodon.name" . }}-init
   namespace: {{ .Release.Namespace }}
 spec:
