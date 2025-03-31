@@ -35,6 +35,8 @@ redis:
       existingSecret: "db-secrets"
       existingSecretPasswordKey: "REDIS_PASSWORD"
 postgresql:
+    global:
+      defaultStorageClass: "gp2"
     auth:
       database: "mastodon_production"
       username: "mastodon"
