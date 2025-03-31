@@ -24,6 +24,8 @@ sidekiq:
 
 
 redis:
+    global:
+      defaultStorageClass: "gp2"
     autoscaling:
       maxReplicas: 1
     replica:
