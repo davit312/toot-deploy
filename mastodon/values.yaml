@@ -1,5 +1,6 @@
 nameOverride: ""
-localDomain: "mastodon.local"
+localDomain: "t.akis.am"
+certificateArn: "arn:aws:acm:us-west-2:418295714420:certificate/01125ef3-5dfa-487e-b498-19b32684973b"
 existingEncriptionSecretName : "app-encription"
 tlsSecretName: "mastodon-tls-secret"
 initialAdmin:
