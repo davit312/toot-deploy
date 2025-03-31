@@ -1,0 +1,35 @@
+# Please edit the object below. Lines beginning with a '#' will be ignored,
+# and an empty file will abort the edit. If an error occurs while saving this file will be
+# reopened with the relevant failures.
+#
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-west-2:418295714420:certificate/01125ef3-5dfa-487e-b498-19b32684973b
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"networking.k8s.io/v1","kind":"Ingress","metadata":{"annotations":{"alb.ingress.kubernetes.io/certificate-arn":"arn:aws:acm:us-west-2:418295714420:certificate/01125ef3-5dfa-487e-b498-19b32684973b","alb.ingress.kubernetes.io/listen-ports":"[{\"HTTP\": 80}, {\"HTTPS\": 443}]","alb.ingress.kubernetes.io/scheme":"internet-facing"},"labels":{"argocd.argoproj.io/instance":"toot-app"},"name":"toot-web-ingress","namespace":"mastodon"},"spec":{"rules":[{"host":"","http":{"paths":[{"backend":{"service":{"name":"toot-web","port":{"number":3000}}},"path":"/","pathType":"Prefix"}]}}]}}
+  creationTimestamp: "2025-03-31T12:42:18Z"
+  generation: 1
+  labels:
+    argocd.argoproj.io/instance: toot-app
+  name: toot-web-ingress
+  namespace: mastodon
+  resourceVersion: "60473"
+  uid: 5a5397fa-4666-482b-8390-a0aec354e269
+spec:
+  ingressClassName: alb
+  rules:
+  - http:
+      paths:
+      - backend:
+          service:
+            name: toot-web
+            port:
+              number: 3000
+        path: /
+        pathType: Prefix
+status:
+  loadBalancer: {}
